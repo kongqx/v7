@@ -325,7 +325,6 @@ static int v_sprintf_s(char *buf, size_t size, const char *fmt, ...) {
   return n;
 }
 
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define BUF_LEFT(size, used) (((size_t)(used) < (size)) ? ((size) - (used)) : 0)
 
 V7_PRIVATE int to_str(struct v7 *v7, val_t v, char *buf, size_t size,
@@ -557,7 +556,7 @@ int v7_stringify_value(struct v7 *v7, val_t v, char *buf, size_t size) {
     return n;
   } else {
     size_t len = (size_t) to_str(v7, v, buf, size, 1);
-    return MIN(size, len);
+    return len < size ? len : size;
   }
 }
 
